@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Find.module.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setFilter } from '../../redux/actions/contactsActions';
+import { setFilter } from '../../redux/contacts/contactsActions';
 
 const FindContact = ({ filter, setFilter }) => {
     const onHandleChange = e => {
