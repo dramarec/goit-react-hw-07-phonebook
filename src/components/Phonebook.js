@@ -11,6 +11,7 @@ import ContactsList from './contacts/ContactsList';
 import FindContact from './findContact/FindContact';
 
 import contactsOperations from '../redux/contacts/contactsOperations';
+// import contactsSelectors from '../redux/contacts/contactsSelectors';
 
 class Phonebook extends Component {
     componentDidMount() {

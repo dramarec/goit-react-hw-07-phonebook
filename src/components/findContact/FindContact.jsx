@@ -3,6 +3,7 @@ import styles from './Find.module.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setFilter } from '../../redux/contacts/contactsActions';
+import contactsSelectors from '../../redux/contacts/contactsSelectors';
 
 const FindContact = ({ filter, setFilter }) => {
     const onHandleChange = e => {
@@ -21,11 +22,11 @@ const FindContact = ({ filter, setFilter }) => {
         </>
     );
 };
-const mapStateToProps = state => {
-    return {
-        filter: state.reducerContacts.filter,
-    };
-};
+
+const mapStateToProps = state => ({
+    filter: contactsSelectors.getFilter(state),
+});
+
 const mapDispatchToProps = dispatch => {
     return {
         setFilter: id => {

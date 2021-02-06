@@ -91,11 +91,10 @@
 import React, { Component } from 'react';
 import styles from './Form.module.css';
 import { connect } from 'react-redux';
-import {
-    /* getAllContacts, */ setAlert,
-} from '../../redux/contacts/contactsActions';
+import { setAlert } from '../../redux/contacts/contactsActions';
 
 import contactsOperations from '../../redux/contacts/contactsOperations';
+import contactsSelectors from '../../redux/contacts/contactsSelectors';
 
 class Form extends Component {
     state = {
@@ -163,14 +162,12 @@ class Form extends Component {
 }
 
 const mapStateToProps = state => ({
-    showUsedAlert: state.reducerContacts.showUsedAlert,
-    showEmptyAlert: state.reducerContacts.showEmptyAlert,
+    showUsedAlert: contactsSelectors.getShowUsedAlert,
+    showEmptyAlert: contactsSelectors.getShowEmptyAlert,
 });
 
 const mapDispatchToProps = {
-    // onAddContact: addNewContact,
     onAddContact: contactsOperations.addNewContact,
     setAlert,
-    // getAllContacts,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

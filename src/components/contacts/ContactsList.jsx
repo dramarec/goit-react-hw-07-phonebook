@@ -3,8 +3,8 @@ import ContactsItem from './contactsItem/ContactsItem';
 // import styles from './Contacts.module.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { deleteContact } from '../../redux/contacts/contactsActions';
 import contactsOperations from '../../redux/contacts/contactsOperations';
+import contactsSelectors from '../../redux/contacts/contactsSelectors';
 
 const ContactsList = ({ contacts, deleteContact }) => {
     const onHandleDeleteContact = e => {
@@ -26,16 +26,14 @@ const ContactsList = ({ contacts, deleteContact }) => {
     );
 };
 
-const mapStateToProps = state => ({
-    contacts: state.reducerContacts.contacts.filter(contact =>
-        contact.name
-            .toLowerCase()
-            .includes(state.reducerContacts.filter.toLowerCase()),
-    ),
-});
+const mapStateToProps = state => {
+    // console.log('state :', state);
+    return {
+        contacts: contactsSelectors.getContacts(state),
+    };
+};
 
 const mapDispatchToProps = {
-    // deleteContact: deleteContact,
     deleteContact: contactsOperations.removeContact,
 };
 
