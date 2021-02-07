@@ -20,7 +20,7 @@ const ContactsItem = ({ id, name, number, onRemove }) => (
 export default ContactsItem;
 
 ContactsItem.propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     number: PropTypes.string.isRequired,
     onRemove: PropTypes.func.isRequired,
