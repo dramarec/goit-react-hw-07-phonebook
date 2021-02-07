@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import styles from './Phonebook.module.css';
 import { Empty, Used } from '../natification/Natification';
@@ -9,8 +9,16 @@ import Header from '../header/Header';
 import Section from '../section/Section';
 import ContactsList from '../contacts/ContactsList';
 import FindContact from '../findContact/FindContact';
+import { getContactOperations } from '../../redux/operations/contactOperations';
 
 const Phonebook = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getContactOperations());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const contacts = useSelector(state => state.reducerContacts.contacts);
     const showUsedAlert = useSelector(
         state => state.reducerContacts.showUsedAlert,
@@ -40,6 +48,9 @@ const Phonebook = () => {
                 </Section>
             )}
 
+            {contacts.length > 0 || (
+                <Section title="Phonebook is empty. Please add contact" />
+            )}
             {contacts.length > 0 && (
                 <Section title="My Contacts">
                     <ContactsList />

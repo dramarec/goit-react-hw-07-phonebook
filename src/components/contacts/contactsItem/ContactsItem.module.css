@@ -45,3 +45,23 @@
     border: 1px solid #f1392d;
     outline: none;
 }
+.button_edit {
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    background-color: #3f51b5;
+    color: #fff;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.button_edit:hover {
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.3);
+}
+.button_edit:focus {
+    background-color: aliceblue;
+    color: black;
+    box-shadow: 0 -1px -5px 0 rgba(0, 0, 0, 0.3);
+}

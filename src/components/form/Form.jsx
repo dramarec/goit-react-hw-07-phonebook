@@ -1,23 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Form.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { addNewContact, setAlert } from '../../redux/actions/contactsActions';
+import { setAlert } from '../../redux/actions/contactsActions';
+import {
+    addNewContactOperations,
+    editContactOperations,
+} from '../../redux/operations/contactOperations';
 
 const initialState = {
     name: '',
     number: '',
 };
 
-const Form = () => {
+const Form = ({ data = { ...initialState }, isEdit = false, closeForm }) => {
+    const [state, setState] = useState({ ...data });
     const dispatch = useDispatch();
+
+    const setLoading = useSelector(state => state.reducerContacts.loading);
     const showUsedAlert = useSelector(
         state => state.reducerContacts.showUsedAlert,
     );
     const showEmptyAlert = useSelector(
         state => state.reducerContacts.showEmptyAlert,
     );
-
-    const [state, setState] = useState({ ...initialState });
 
     useEffect(() => {
         if (showUsedAlert || showEmptyAlert) {
@@ -32,48 +37,61 @@ const Form = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(
-            addNewContact({
-                name: state.name,
-                number: state.number,
-            }),
-        );
-        setState({
-            name: '',
-            number: '',
-        });
+        if (isEdit) {
+            closeForm(false);
+            dispatch(editContactOperations(state));
+        } else dispatch(addNewContactOperations(state));
+        setState({ ...initialState });
+    };
+    const onClose = () => {
+        closeForm(false);
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Name
-                <input
-                    type="text"
-                    name="name"
-                    className={styles.input}
-                    placeholder="Name"
-                    value={state.name}
-                    onChange={handleInputChange}
-                />
-            </label>
+        <>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Name
+                    <input
+                        type="text"
+                        name="name"
+                        className={styles.input}
+                        placeholder="Name"
+                        value={state.name}
+                        onChange={handleInputChange}
+                    />
+                </label>
 
-            <label>
-                Number
-                <input
-                    type="text"
-                    name="number"
-                    className={styles.input}
-                    placeholder="Number"
-                    value={state.number}
-                    onChange={handleInputChange}
-                />
-            </label>
+                <label>
+                    Number
+                    <input
+                        type="text"
+                        name="number"
+                        className={styles.input}
+                        placeholder="Number"
+                        value={state.number}
+                        onChange={handleInputChange}
+                    />
+                </label>
 
-            <button className={styles.button} type="submit">
-                Add contact
-            </button>
-        </form>
+                {setLoading ? (
+                    <h2>Loading...</h2>
+                ) : (
+                    <button className={styles.button} type="submit">
+                        {isEdit ? 'Edit Contact' : ' Add contact'}
+                    </button>
+                )}
+                {isEdit && (
+                    <button
+                        className={styles.button}
+                        type="button"
+                        onClick={onClose}
+                    >
+                        Close
+                    </button>
+                )}
+            </form>
+        </>
     );
 };
 
