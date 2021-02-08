@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './ContactsItem.module.css';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 const ContactsItem = ({ id, name, number, onRemove, onEdit }) => (
     <li className={styles.item}>
@@ -27,9 +27,9 @@ const ContactsItem = ({ id, name, number, onRemove, onEdit }) => (
 
 export default ContactsItem;
 
-// ContactsItem.propTypes = {
-//     id: PropTypes.string.isRequired,
-//     name: PropTypes.string.isRequired,
-//     number: PropTypes.string.isRequired,
-//     onRemove: PropTypes.func.isRequired,
-// };
+ContactsItem.propTypes = {
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+    onRemove: PropTypes.func.isRequired,
+};
